@@ -14,7 +14,7 @@ export const Resume = () => {
 		<Context.Consumer>
 			{({ store }) => {
 				const name = store.user.firstName + " " + store.user.lastName;
-				const exp = store.experiences.filter(item => item.resume);
+				const exp = store.experience.filter(item => item.resume);
 				return (
 					<div className="resume container h-100 m-2">
 						<div className="row">

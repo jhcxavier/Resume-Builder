@@ -18,7 +18,7 @@ export class Layout extends React.Component {
 	};
 
 	rowStyle = {
-		height: window.innerHeight - 30
+		// height: window.innerHeight - 30
 	};
 
 	render() {

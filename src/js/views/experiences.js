@@ -11,8 +11,18 @@ export const Experiences = () => {
 	const [description, setDescription] = useState("");
 	const [fromDate, setFromDate] = useState(null);
 	const [toDate, setToDate] = useState(null);
-	const [resume, setResume] = useState(false);
-	const [page, setPage] = useState(false);
+	const [resume, setResume] = useState("false");
+	const [page, setPage] = useState("false");
+
+	const clearFields = () => {
+		setTitle("");
+		setCompany("");
+		setDescription("");
+		setFromDate(null);
+		setToDate(null);
+		setResume(false);
+		setPage(false);
+	};
 
 	return (
 		<div className="container">
@@ -66,7 +76,7 @@ export const Experiences = () => {
 						cols="36"
 						name="description"
 						placeholder="Description"
-						defaultValue={description}
+						value={description}
 						onChange={e => setDescription(e.target.value)}
 					/>
 				</div>
@@ -74,31 +84,45 @@ export const Experiences = () => {
 					<input
 						className="display-inline-block"
 						type="checkbox"
-						checked={resume ? "checked" : ""}
-						onChange={() => setResume(!resume)}
+						checked={resume === "true" ? "checked" : ""}
+						onChange={() => setResume(resume === "true" ? "false" : "true")}
 					/>
 					Resume
 					<input
 						className="ml-4 display-inline-block"
 						type="checkbox"
-						checked={page ? "checked" : ""}
-						onClick={() => setPage(!page)}
+						checked={page === "true" ? "checked" : ""}
+						onClick={() => setPage(page === "true" ? "false" : "true")}
 					/>
 					Page
-					<button
-						className="btn btn-info float-right"
-						onClick={() =>
-							alert(
-								`Title: ${title}\nCompany: ${company}\nDescription: ${description}\nResume: ${resume}`
-							)
-						}>
-						Save
-					</button>
+					<Context.Consumer>
+						{({ store, actions }) => {
+							return (
+								<button
+									className="btn btn-info float-right"
+									onClick={() => {
+										clearFields();
+										actions.addExperience(
+											title,
+											company,
+											description,
+											fromDate,
+											toDate,
+											resume,
+											page,
+											store.user.id
+										);
+									}}>
+									Save
+								</button>
+							);
+						}}
+					</Context.Consumer>
 				</div>
 			</div>
 			<Context.Consumer>
 				{({ store }) => {
-					return store.experiences.map((item, index) => {
+					return store.experience.map((item, index) => {
 						return (
 							<ExperienceCard
 								key={index}
@@ -110,6 +134,7 @@ export const Experiences = () => {
 								toDate={item.toDate}
 								resume={item.resume}
 								page={item.page}
+								id={item.id}
 							/>
 						);
 					});

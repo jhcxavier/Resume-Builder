@@ -2,6 +2,7 @@ const getState = ({ getStore, setStore }) => {
 	return {
 		store: {
 			user: {
+				id: 2,
 				firstName: "Hernan",
 				lastName: "Garcia",
 				email: "hernan.garcia@gmail.com",
@@ -13,8 +14,10 @@ const getState = ({ getStore, setStore }) => {
 				title: "Software Engineer",
 				display: "objective"
 			},
-			experiences: [
-				{
+			experience: [],
+
+			/*	{
+					id: 1,
 					title: "Programmer",
 					company: "4 Geeks Academy",
 					description: "Worked as a programmer using React and Flask.",
@@ -24,6 +27,7 @@ const getState = ({ getStore, setStore }) => {
 					page: false
 				},
 				{
+					id: 2,
 					title: "Restaurant Manager",
 					company: "Centerplate",
 					description:
@@ -34,6 +38,7 @@ const getState = ({ getStore, setStore }) => {
 					page: false
 				},
 				{
+					id: 3,
 					title: "Car Washer",
 					company: "Clean Clean Cars",
 					description: "Cleaned cars the best way that anyone can.",
@@ -43,6 +48,7 @@ const getState = ({ getStore, setStore }) => {
 					page: true
 				},
 				{
+					id: 4,
 					title: "Warehouse Manager",
 					company: "Bill Hansen's Catering",
 					description: "Organized events and employees.",
@@ -50,8 +56,8 @@ const getState = ({ getStore, setStore }) => {
 					toDate: "09/01/2019",
 					resume: true,
 					page: true
-				}
-			],
+				}*/
+
 			skills: [
 				{
 					skill: "JavaScript",
@@ -147,13 +153,71 @@ const getState = ({ getStore, setStore }) => {
 			certificates: []
 		},
 		actions: {
-			selectResumePage: (obj, resumeORpage, index, value) => {
-				let store = getStore();
-				store[obj][index][resumeORpage] = value;
-				setStore({ store });
+			addExperience: (title, company, description, fromDate, toDate, resume, page, user_id) => {
+				const store = getStore();
+				const url = "https://3000-bf06f45a-4fe9-4e5e-b0d8-9433a51695ab.ws-us0.gitpod.io/experience";
+				fetch(url, {
+					method: "post",
+					headers: { "Content-type": "application/json" },
+					body: JSON.stringify({
+						title: title,
+						company: company,
+						description: description,
+						fromDate: fromDate,
+						toDate: toDate,
+						resume: resume,
+						page: page,
+						user_id: user_id
+					})
+				}).then(getRefresh => {
+					fetch(url)
+						.then(response => response.json())
+						.then(data => {
+							store.experience = data;
+							setStore({ store });
+						});
+				});
 			},
 
-			addExperience: []
+			deleteExperience: id => {
+				const store = getStore();
+				fetch("https://3000-bf06f45a-4fe9-4e5e-b0d8-9433a51695ab.ws-us0.gitpod.io/experience/" + id, {
+					method: "delete"
+				}).then(getRefresh => {
+					fetch("https://3000-bf06f45a-4fe9-4e5e-b0d8-9433a51695ab.ws-us0.gitpod.io/experience")
+						.then(response => response.json())
+						.then(data => {
+							store.experience = data;
+							setStore({ store });
+						});
+				});
+			},
+
+			editExperience: (id, title, company, description, fromDate, toDate, resume, page) => {
+				const store = getStore();
+				fetch("https://3000-bf06f45a-4fe9-4e5e-b0d8-9433a51695ab.ws-us0.gitpod.io/experience/" + id, {
+					method: "put",
+					headers: { "Content-type": "application/json" },
+					body: JSON.stringify({
+						id: id,
+						title: title,
+						company: company,
+						description: description,
+						fromDate: fromDate,
+						toDate: toDate,
+						resume: resume,
+						page: page
+					})
+				}).then(getRefresh => {
+					fetch("https://3000-bf06f45a-4fe9-4e5e-b0d8-9433a51695ab.ws-us0.gitpod.io/experience")
+						.then(response => response.json())
+						.then(data => {
+							store.experience = data;
+							setStore({ store });
+						});
+				});
+			},
+			addEducation: []
 		}
 	};
 };
