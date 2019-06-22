@@ -1,5 +1,6 @@
 import React from "react";
 import getState from "./flux.js";
+import url from "./url";
 
 // Don't change, here is where we initialize our context, by default its just going to be Null.
 export const Context = React.createContext(null);
@@ -22,14 +23,15 @@ const injectContext = PassedComponent => {
 		}
 
 		componentDidMount() {
-			const url = "https://3000-bf06f45a-4fe9-4e5e-b0d8-9433a51695ab.ws-us0.gitpod.io/experience";
-			fetch(url)
+			//const url = "https://3000-bf06f45a-4fe9-4e5e-b0d8-9433a51695ab.ws-us0.gitpod.io/experience";
+			fetch(process.env.HOST + "/experience")
 				.then(response => response.json())
 				.then(data => {
 					let { store } = this.state;
 					store.experience = data;
 					this.setState({ store });
 				});
+			console.log("Host: ", process.env.HOST);
 		}
 
 		render() {
