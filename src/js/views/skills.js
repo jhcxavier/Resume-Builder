@@ -8,6 +8,12 @@ export const Skills = () => {
 	const [resume, setResume] = useState(false);
 	const [page, setPage] = useState(false);
 
+	const clearFields = () => {
+		setSkill("");
+		setResume(false);
+		setPage(false);
+	};
+
 	return (
 		<Context.Consumer>
 			{({ store, actions }) => {
@@ -42,7 +48,7 @@ export const Skills = () => {
 								<button
 									className="btn btn-info float-right"
 									onClick={() => {
-										//clearFields();
+										clearFields();
 										actions.addSkill(skill, resume, page, store.user.id);
 									}}>
 									Save
