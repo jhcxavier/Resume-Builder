@@ -238,6 +238,19 @@ const getState = ({ getStore, setStore }) => {
 							setStore({ store });
 						});
 				});
+			},
+			deleteSkill: id => {
+				const store = getStore();
+				fetch(process.env.HOST + "/skills/" + id, {
+					method: "delete"
+				}).then(() => {
+					fetch(process.env.HOST + "/skills")
+						.then(response => response.json())
+						.then(data => {
+							store.skills = data;
+							setStore({ store });
+						});
+				});
 			}
 		}
 	};

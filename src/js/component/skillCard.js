@@ -9,32 +9,32 @@ export const SkillCard = props => {
 	const [skill, setSkill] = useState(props.skill);
 
 	return (
-		<div className="card mt-2 bg-light">
-			<div className="card-body text-left">
-				<div className="float-right">
-					{editMode ? (
-						<i className="fas fa-times fa-lg mr-3" onClick={() => setEditMode(!editMode)} />
-					) : (
-						<i className="fas fa-pencil-alt mr-3" onClick={() => setEditMode(!editMode)} />
-					)}
-					<i className="fas fa-trash-alt" />
-				</div>
-				{editMode ? (
-					<input
-						className="m-1"
-						size="37"
-						type="text"
-						value={skill}
-						onChange={e => setSkill(e.target.value)}
-					/>
-				) : (
-					<h5 className="card-title text-center">{skill}</h5>
-				)}
-			</div>
+		<Context.Consumer>
+			{({ actions }) => {
+				return (
+					<div className="card mt-2 bg-light">
+						<div className="card-body text-left">
+							<div className="float-right">
+								{editMode ? (
+									<i className="fas fa-times fa-lg mr-3" onClick={() => setEditMode(!editMode)} />
+								) : (
+									<i className="fas fa-pencil-alt mr-3" onClick={() => setEditMode(!editMode)} />
+								)}
+								<i className="fas fa-trash-alt" onClick={() => actions.deleteSkill(props.id)} />
+							</div>
+							{editMode ? (
+								<input
+									className="m-1"
+									size="37"
+									type="text"
+									value={skill}
+									onChange={e => setSkill(e.target.value)}
+								/>
+							) : (
+								<h5 className="card-title text-center">{skill}</h5>
+							)}
+						</div>
 
-			<Context.Consumer>
-				{({ actions }) => {
-					return (
 						<div className="card-footer text-muted">
 							<input
 								className="display-inline-block"
@@ -67,10 +67,10 @@ export const SkillCard = props => {
 								""
 							)}
 						</div>
-					);
-				}}
-			</Context.Consumer>
-		</div>
+					</div>
+				);
+			}}
+		</Context.Consumer>
 	);
 };
 
@@ -78,6 +78,7 @@ SkillCard.propTypes = {
 	index: PropTypes.string,
 	skill: PropTypes.string,
 	resume: PropTypes.string,
-	page: PropTypes.string
+	page: PropTypes.string,
+	id: PropTypes.number
 	// level: PropTypes.number
 };

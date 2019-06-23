@@ -48,7 +48,7 @@ export const Skills = () => {
 								<button
 									className="btn btn-info float-right"
 									onClick={() => {
-										clearFields();
+										//clearFields();
 										actions.addSkill(skill, resume, page, store.user.id);
 									}}>
 									Save
