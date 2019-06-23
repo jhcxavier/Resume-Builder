@@ -251,6 +251,27 @@ const getState = ({ getStore, setStore }) => {
 							setStore({ store });
 						});
 				});
+			},
+			editSkill: (id, skill, resume, page, user_id) => {
+				const store = getStore();
+				fetch(process.env.HOST + "/skills/" + id, {
+					method: "put",
+					headers: { "Content-type": "application/json" },
+					body: JSON.stringify({
+						id: id,
+						skill: skill,
+						resume: resume,
+						page: page,
+						user_id: user_id
+					})
+				}).then(getRefresh => {
+					fetch(process.env.HOST + "/skills")
+						.then(response => response.json())
+						.then(data => {
+							store.skills = data;
+							setStore({ store });
+						});
+				});
 			}
 		}
 	};

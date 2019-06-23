@@ -7,6 +7,9 @@ export const SkillCard = props => {
 	// const [level, setLevel] = useState(props.level);
 	const [editMode, setEditMode] = useState(false);
 	const [skill, setSkill] = useState(props.skill);
+	const [resume, setResume] = useState(props.resume);
+	const [page, setPage] = useState(props.page);
+	const [user_id, setUser_id] = useState(props.user_id);
 
 	return (
 		<Context.Consumer>
@@ -39,9 +42,7 @@ export const SkillCard = props => {
 							<input
 								className="display-inline-block"
 								type="checkbox"
-								onClick={e =>
-									actions.selectResumePage("experiences", "resume", props.index, e.target.checked)
-								}
+								onClick={e => actions.setResume("experiences", "resume", props.index, e.target.checked)}
 								checked={props.resume ? "checked" : ""}
 							/>
 							Resume
@@ -49,7 +50,7 @@ export const SkillCard = props => {
 								className="ml-4 display-inline-block"
 								type="checkbox"
 								onClick={({ target: { checked } }) =>
-									actions.selectResumePage("experiences", "page", props.index, checked)
+									actions.setPage("experiences", "page", props.index, checked)
 								}
 								checked={props.page ? "checked" : ""}
 							/>
@@ -59,7 +60,7 @@ export const SkillCard = props => {
 									className="btn btn-info float-right"
 									onClick={() => {
 										setEditMode(!editMode);
-										actions.addSkills(skill, resume, page, user_id);
+										actions.editSkills(skill, resume, page, user_id);
 									}}>
 									Save
 								</button>
@@ -79,6 +80,7 @@ SkillCard.propTypes = {
 	skill: PropTypes.string,
 	resume: PropTypes.string,
 	page: PropTypes.string,
-	id: PropTypes.number
+	id: PropTypes.number,
+	user_id: PropTypes.number
 	// level: PropTypes.number
 };
