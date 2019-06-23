@@ -61,7 +61,7 @@ const getState = ({ getStore, setStore }) => {
 				}*/
 
 			skills: [
-				{
+				/*{
 					skill: "JavaScript",
 					level: 7,
 					resume: true,
@@ -96,7 +96,7 @@ const getState = ({ getStore, setStore }) => {
 					level: 3,
 					resume: true,
 					page: false
-				}
+				}*/
 			],
 			education: [
 				{
@@ -219,13 +219,13 @@ const getState = ({ getStore, setStore }) => {
 						});
 				});
 			},
-			addSkill: () => {
+			addSkill: (skill, resume, page, user_id) => {
 				const store = getStore();
 				fetch(process.env.HOST + "/skills", {
 					method: "post",
 					headers: { "Content-type": "application/json" },
 					body: JSON.stringify({
-						skills: skills,
+						skill: skill,
 						resume: resume,
 						page: page,
 						user_id: user_id

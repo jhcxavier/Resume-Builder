@@ -39,7 +39,14 @@ export const Skills = () => {
 									onClick={() => setPage(!page)}
 								/>
 								Page
-								<button className="btn btn-info float-right">Save</button>
+								<button
+									className="btn btn-info float-right"
+									onClick={() => {
+										//clearFields();
+										actions.addSkill(skill, resume, page, store.user.id);
+									}}>
+									Save
+								</button>
 							</div>
 						</div>
 						{store.skills.map((item, index) => {
@@ -49,7 +56,7 @@ export const Skills = () => {
 									skill={item.skill}
 									resume={item.resume}
 									page={item.page}
-									user_id={item.user_id}
+									id={item.id}
 									//level={item.level}
 								/>
 							);

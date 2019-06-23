@@ -24,7 +24,7 @@ const injectContext = PassedComponent => {
 
 		componentDidMount() {
 			//const url = "https://3000-bf06f45a-4fe9-4e5e-b0d8-9433a51695ab.ws-us0.gitpod.io/experience";
-			fetch(process.env.HOST + "/experience")
+			fetch(process.env.HOST)
 				.then(response => response.json())
 				.then(data => {
 					let { store } = this.state;
