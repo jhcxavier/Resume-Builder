@@ -7,9 +7,6 @@ export const SkillCard = props => {
 	// const [level, setLevel] = useState(props.level);
 	const [editMode, setEditMode] = useState(false);
 	const [skill, setSkill] = useState(props.skill);
-	const [resume, setResume] = useState(props.resume);
-	const [page, setPage] = useState(props.page);
-	const [user_id, setUser_id] = useState(props.user_id);
 
 	return (
 		<Context.Consumer>
@@ -60,7 +57,7 @@ export const SkillCard = props => {
 									className="btn btn-info float-right"
 									onClick={() => {
 										setEditMode(!editMode);
-										actions.editSkills(skill, resume, page, user_id);
+										actions.editSkill(skill, props.resume, props.page);
 									}}>
 									Save
 								</button>
@@ -80,7 +77,7 @@ SkillCard.propTypes = {
 	skill: PropTypes.string,
 	resume: PropTypes.string,
 	page: PropTypes.string,
-	id: PropTypes.number,
-	user_id: PropTypes.number
+	id: PropTypes.number
+
 	// level: PropTypes.number
 };
