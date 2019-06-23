@@ -49,6 +49,7 @@ export const Skills = () => {
 									skill={item.skill}
 									resume={item.resume}
 									page={item.page}
+									user_id={item.user_id}
 									//level={item.level}
 								/>
 							);

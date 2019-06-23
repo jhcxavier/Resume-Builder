@@ -158,7 +158,7 @@ const getState = ({ getStore, setStore }) => {
 			addExperience: (title, company, description, fromDate, toDate, resume, page, user_id) => {
 				const store = getStore();
 				//const url = "https://3000-bf06f45a-4fe9-4e5e-b0d8-9433a51695ab.ws-us0.gitpod.io/experience";
-				fetch("https://3000-d264df04-a6ca-4a6f-8099-1975fcd685a2.ws-us0.gitpod.io/experience", {
+				fetch(process.env.HOST + "/experience", {
 					method: "post",
 					headers: { "Content-type": "application/json" },
 					body: JSON.stringify({
@@ -172,7 +172,7 @@ const getState = ({ getStore, setStore }) => {
 						user_id: user_id
 					})
 				}).then(getRefresh => {
-					fetch("https://3000-d264df04-a6ca-4a6f-8099-1975fcd685a2.ws-us0.gitpod.io/experience")
+					fetch(process.env.HOST + "/experience")
 						.then(response => response.json())
 						.then(data => {
 							store.experience = data;
@@ -219,7 +219,26 @@ const getState = ({ getStore, setStore }) => {
 						});
 				});
 			},
-			addEducation: []
+			addSkill: () => {
+				const store = getStore();
+				fetch(process.env.HOST + "/skills", {
+					method: "post",
+					headers: { "Content-type": "application/json" },
+					body: JSON.stringify({
+						skills: skills,
+						resume: resume,
+						page: page,
+						user_id: user_id
+					})
+				}).then(() => {
+					fetch(process.env.HOST + "/skills")
+						.then(response => response.json())
+						.then(data => {
+							store.skills = data;
+							setStore({ store });
+						});
+				});
+			}
 		}
 	};
 };

@@ -57,9 +57,10 @@ export const SkillCard = props => {
 							{editMode ? (
 								<button
 									className="btn btn-info float-right"
-									onClick={
-										() => alert(`Skill: ${skill}`) //\nResume: ${resume}\nPage: ${page}`)
-									}>
+									onClick={() => {
+										setEditMode(!editMode);
+										actions.addSkills(skill, resume, page, user_id);
+									}}>
 									Save
 								</button>
 							) : (

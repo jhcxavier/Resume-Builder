@@ -31,7 +31,6 @@ const injectContext = PassedComponent => {
 					store.experience = data;
 					this.setState({ store });
 				});
-			console.log("Host: ", process.env.HOST);
 		}
 
 		render() {
